@@ -1,0 +1,51 @@
+from speechmatics.models import ConnectionSettings
+from speechmatics.batch_client import BatchClient
+from httpx import HTTPStatusError
+
+API_KEY = "YOUR_API_KEY"
+PATH_TO_FILE = "example.wav"
+LANGUAGE = "en" # Transcription language
+TRANSLATION_LANGUAGES = ["es","de"]
+
+settings = ConnectionSettings(
+    url="https://asr.api.speechmatics.com/v2",
+    auth_token=API_KEY,
+)
+
+# Define transcription parameters
+conf = {
+    "type": "transcription",
+    "transcription_config": {
+        "language": LANGUAGE
+    },
+    "translation_config": {
+        "target_languages":TRANSLATION_LANGUAGES
+    }
+}
+
+# Open the client using a context manager
+with BatchClient(settings) as client:
+    try:
+        job_id = client.submit_job(
+            audio=PATH_TO_FILE,
+            transcription_config=conf,
+        )
+        print(f'job {job_id} submitted successfully, waiting for transcript')
+
+        # Note that in production, you should set up notifications instead of polling.
+        # Notifications are described here: https://docs.speechmatics.com/features-other/notifications
+        transcript = client.wait_for_completion(job_id, transcription_format='json-v2')
+        for language in TRANSLATION_LANGUAGES:
+        # Print the translation for each language from the JSON
+        print(f"Translation for {language}")
+        translation = ""
+        for translated_segment in transcript["translations"][language]:
+            translation += translated_segment["content"] + " "
+        print(translation)
+    except HTTPStatusError as e:
+        if e.response.status_code === 401:
+            print('Invalid API key - Check your API_KEY at the top of the code!')
+        elif e.response.status_code === 400:
+            print(e.response.json()['detail'])
+        else:
+            raise e
