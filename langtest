@@ -2,7 +2,7 @@ from speechmatics.models import ConnectionSettings
 from speechmatics.batch_client import BatchClient
 from httpx import HTTPStatusError
 
-API_KEY = "YOUR_API_KEY"
+API_KEY = "dodyqsDKOwzTUyxHBXWMbKDDGxRqRONH"
 PATH_TO_FILE = "example.wav"
 LANGUAGE = "en" # Transcription language
 TRANSLATION_LANGUAGES = ["es","de"]
