@@ -4,8 +4,8 @@ from httpx import HTTPStatusError
 
 API_KEY = "dodyqsDKOwzTUyxHBXWMbKDDGxRqRONH"
 PATH_TO_FILE = "https://westlakevillage.granicus.com/player/clip/1560?view_id=16&redirect=true"
-LANGUAGE = "en" # Transcription language
-TRANSLATION_LANGUAGES = ["es","de"]
+LANGUAGE = "en"  # Transcription language
+TRANSLATION_LANGUAGES = ["es", "de"]
 
 settings = ConnectionSettings(
     url="https://asr.api.speechmatics.com/v2",
@@ -19,7 +19,7 @@ conf = {
         "language": LANGUAGE
     },
     "translation_config": {
-        "target_languages":TRANSLATION_LANGUAGES
+        "target_languages": TRANSLATION_LANGUAGES
     }
 }
 
@@ -36,16 +36,16 @@ with BatchClient(settings) as client:
         # Notifications are described here: https://docs.speechmatics.com/features-other/notifications
         transcript = client.wait_for_completion(job_id, transcription_format='json-v2')
         for language in TRANSLATION_LANGUAGES:
-        # Print the translation for each language from the JSON
-        print(f"Translation for {language}")
-        translation = ""
-        for translated_segment in transcript["translations"][language]:
-            translation += translated_segment["content"] + " "
-        print(translation)
+            # Print the translation for each language from the JSON
+            print(f"Translation for {language}")
+            translation = ""
+            for translated_segment in transcript["translations"][language]:
+                translation += translated_segment["content"] + " "
+            print(translation)
     except HTTPStatusError as e:
-        if e.response.status_code === 401:
+        if e.response.status_code == 401:
             print('Invalid API key - Check your API_KEY at the top of the code!')
-        elif e.response.status_code === 400:
+        elif e.response.status_code == 400:
             print(e.response.json()['detail'])
         else:
             raise e
