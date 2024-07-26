@@ -3,7 +3,7 @@ from speechmatics.batch_client import BatchClient
 from httpx import HTTPStatusError
 
 API_KEY = "dodyqsDKOwzTUyxHBXWMbKDDGxRqRONH"
-PATH_TO_FILE = "https://westlakevillage.granicus.com/player/clip/1560?view_id=16&redirect=true"
+PATH_TO_FILE = "https://archive-video.granicus.com/westlakevillage/westlakevillage_9b2dcdc8-9d87-42ef-a2f0-c2ab2faf1123.mp4"
 LANGUAGE = "en"  # Transcription language
 TRANSLATION_LANGUAGES = ["es", "de"]
 
