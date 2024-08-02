@@ -1,22 +1,21 @@
 <style>
-  #wordly-frame {
-    position: relative;
-  }
-  #wordly-frame::before,
-  #wordly-frame::after {
-    content: '';
+  .cover {
     position: absolute;
     left: 0;
     right: 0;
-    height: 50px; /* Adjust as needed to cover the branding */
-    background: white; /* Match the background color of your iframe content */
+    height: 80px;
+    background: white;
     z-index: 9999;
   }
-  #wordly-frame::before {
+  .cover.top {
     top: 0;
   }
-  #wordly-frame::after {
+  .cover.bottom {
     bottom: 0;
   }
 </style>
-<iframe id="wordly-frame" src="https://attend.wordly.ai/frame/kvnb-7339?lang=es" width="100%" height="600px"></iframe>
+<div style="position: relative; width: 100%; height: 600px;">
+  <iframe id="wordly-frame" src="https://attend.wordly.ai/frame/kvnb-7339?lang=en" width="100%" height="100%"></iframe>
+  <div class="cover top"></div>
+  <div class="cover bottom"></div>
+</div>
